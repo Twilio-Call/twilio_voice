@@ -533,7 +533,14 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
         } else if (call.method.equals("setAppHasStarted")) {
             this.appHasStarted = call.argument("appHasStarted");
             result.success(true);
-        } else {
+        } else if(call.method.equals("getParams")){
+            String firstname = activeCallInvite.getCustomParameters().get("firstname");
+            String lastname = activeCallInvite.getCustomParameters().get("lastname");
+            String phoneNum = activeCallInvite.getFrom();
+            String allNameUsed = firstname == null || lastname ==null ? phoneNum : firstname +" "+ lastname;
+            Log.d(TAG, "Get params user invite "+ allNameUsed);
+            result.success(allNameUsed);
+        }else {
             result.notImplemented();
         }
     }

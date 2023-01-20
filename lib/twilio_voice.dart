@@ -128,6 +128,11 @@ class TwilioVoice {
         'defaultCaller', <String, dynamic>{"defaultCaller": callerName});
   }
 
+  //Get params Try
+  Future<String?> getParams() {
+    return _channel.invokeMethod<String?>('getParams', <String, dynamic>{});
+  }
+
   /// Android-only, shows background call UI
   Future<bool?> showBackgroundCallUI() {
     return _channel.invokeMethod("backgroundCallUI", {});
