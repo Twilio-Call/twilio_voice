@@ -1,34 +1,31 @@
 package com.twilio.twilio_voice;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 //import com.twilio.voice.Call;
 import com.twilio.voice.CallInvite;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BackgroundCallJavaActivity extends AppCompatActivity {
 
@@ -48,6 +45,10 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private ImageView btnOutput;
     private ImageView btnHangUp;
 
+    private TextView textTimer;
+    private Timer timer;
+    private int seconds = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +56,15 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         tvUserName = (TextView) findViewById(R.id.tvUserName);
-        tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
         btnMute = (ImageView) findViewById(R.id.btnMute);
         btnOutput = (ImageView) findViewById(R.id.btnOutput);
         btnHangUp = (ImageView) findViewById(R.id.btnHangUp);
 
+        this.textTimer = findViewById(R.id.textTimer);
+        this.textTimer.setVisibility(View.GONE);
+
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-        Boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
+        boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
 
         Log.d(TAG, "isKeyguardUp $isKeyguardUp");
         if (isKeyguardUp) {
@@ -72,8 +75,8 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                 kgm.requestDismissKeyguard(this, null);
 
             } else {
-                wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
-                wakeLock.acquire();
+                wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+                wakeLock.acquire(10*60*1000L /*10 minutes*/);
 
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_FULLSCREEN |
@@ -88,6 +91,58 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
         handleCallIntent(getIntent());
     }
+
+    private void close() {
+
+
+        if (this.wakeLock != null && this.wakeLock.isHeld()) {
+            this.wakeLock.release();
+        }
+
+        this.stopTimer();
+
+        this.finish();
+    }
+
+    @Override
+    public void finish() {
+        this.stopTimer();
+        super.finish();
+    }
+
+    private void startTimer() {
+        this.textTimer.setVisibility(View.VISIBLE);
+        this.textTimer.setText(DateUtils.formatElapsedTime(0));
+
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                seconds += 1;
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        textTimer.setText(DateUtils.formatElapsedTime(seconds));
+                    }
+                });
+            }
+        }, 0, 1000);
+    }
+
+    private void stopTimer() {
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer = null;
+        }
+        this.textTimer.setVisibility(View.GONE);
+    }
+
+
 
     private void handleCallIntent(Intent intent) {
         if (intent != null) {
@@ -105,6 +160,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
                 tvUserName.setText(caller);
                 tvCallStatus.setText(getString(R.string.connected_status));
+                startTimer();
                 Log.d(TAG, "handleCallIntent-");
                 configCallUI();
             }else{
@@ -113,14 +169,15 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     private void activateSensor() {
         if (wakeLock == null) {
             Log.d(TAG, "New wakeLog");
-            wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "incall");
+            wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "in call");
         }
         if (!wakeLock.isHeld()) {
             Log.d(TAG, "wakeLog acquire");
-            wakeLock.acquire();
+            wakeLock.acquire(10*60*1000L /*10 minutes*/);
         } 
     }
 
@@ -137,12 +194,8 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         if (intent != null && intent.getAction() != null) {
             Log.d(TAG, "onNewIntent-");
             Log.d(TAG, intent.getAction());
-            switch (intent.getAction()) {
-                case Constants.ACTION_CANCEL_CALL:
-                    callCanceled();
-                    break;
-                default: {
-                }
+            if (Constants.ACTION_CANCEL_CALL.equals(intent.getAction())) {
+                callCanceled();
             }
         }
     }
@@ -153,32 +206,24 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private void configCallUI() {
         Log.d(TAG, "configCallUI");
 
-        btnMute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onCLick");
-                sendIntent(Constants.ACTION_TOGGLE_MUTE);
-                isMuted = !isMuted;
-                applyFabState(btnMute, isMuted);
-            }
+        btnMute.setOnClickListener(v -> {
+
+            Log.d(TAG, "onCLick");
+            sendIntent(Constants.ACTION_TOGGLE_MUTE);
+            isMuted = !isMuted;
+            applyFabState(btnMute, isMuted);
         });
 
-        btnHangUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendIntent(Constants.ACTION_END_CALL);
-                finish();
-
-            }
+        btnHangUp.setOnClickListener(v -> {
+            sendIntent(Constants.ACTION_END_CALL);
+            finish();
+            close();
         });
-        btnOutput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-                audioManager.setSpeakerphoneOn(isOnSpeaker);
-                applyFabState(btnOutput, isOnSpeaker);
-            }
+        btnOutput.setOnClickListener(v -> {
+            AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+            audioManager.setSpeakerphoneOn(isOnSpeaker);
+            applyFabState(btnOutput, isOnSpeaker);
         });
 
     }
@@ -193,9 +238,10 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         } else {
             colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent));
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            button.setBackgroundTintList(colorStateList);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            button.setBackgroundTintList(colorStateList);
+//        }
+        button.setBackgroundTintList(colorStateList);
     }
 
     private void sendIntent(String action) {
@@ -211,6 +257,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     private void callCanceled() {
         Log.d(TAG, "Call is cancelled");
+        close();
         finish();
     }
 

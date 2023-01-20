@@ -9,15 +9,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +28,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.twilio.voice.Call;
 import com.twilio.voice.CallException;
 import com.twilio.voice.CallInvite;
+
+import java.util.Objects;
 
 
 public class AnswerJavaActivity extends AppCompatActivity {
@@ -47,9 +48,9 @@ public class AnswerJavaActivity extends AppCompatActivity {
     private static final int MIC_PERMISSION_REQUEST_CODE = 17893;
     private PowerManager.WakeLock wakeLock;
     private TextView tvUserName;
-    private TextView tvCallStatus;
-    private ImageView btnAnswer;
-    private ImageView btnReject;
+    // private TextView tvCallStatus;
+    private LinearLayout btnAnswer;
+    private LinearLayout btnReject;
     Call.Listener callListener = callListener();
 
     @Override
@@ -58,9 +59,9 @@ public class AnswerJavaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_answer);
 
         tvUserName = (TextView) findViewById(R.id.tvUserName);
-        tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
-        btnAnswer = (ImageView) findViewById(R.id.btnAnswer);
-        btnReject = (ImageView) findViewById(R.id.btnReject);
+        // tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
+        btnAnswer = (LinearLayout) findViewById(R.id.btnAnswer);
+        btnReject = (LinearLayout) findViewById(R.id.btnReject);
 
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
@@ -78,7 +79,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
                 kgm.requestDismissKeyguard(this, null);
             } else {
                 PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
+                wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
                 wakeLock.acquire(60 * 1000L /*10 minutes*/);
 
                 getWindow().addFlags(
@@ -100,7 +101,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             String action = intent.getAction();
             activeCallInvite = intent.getParcelableExtra(Constants.INCOMING_CALL_INVITE);
             activeCallNotificationId = intent.getIntExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, 0);
-            tvCallStatus.setText(R.string.incoming_call_title);
+//            tvCallStatus.setText(R.string.incoming_call_title);
             Log.d(TAG, action);
             switch (action) {
                 case Constants.ACTION_INCOMING_CALL:
@@ -140,12 +141,8 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Log.d(TAG, "onNewIntent-");
         if (intent != null && intent.getAction() != null) {
             Log.d(TAG, intent.getAction());
-            switch (intent.getAction()) {
-                case Constants.ACTION_CANCEL_CALL:
-                    newCancelCallClickListener();
-                    break;
-                default: {
-                }
+            if (Constants.ACTION_CANCEL_CALL.equals(intent.getAction())) {
+                newCancelCallClickListener();
             }
         }
     }
@@ -155,25 +152,45 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Log.d(TAG, "configCallUI");
         if (activeCallInvite != null) {
 
-            String fromId = activeCallInvite.getFrom().replace("client:", "");
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
-            String caller = preferences.getString(fromId, preferences.getString("defaultCaller", getString(R.string.unknown_caller)));
-            tvUserName.setText(caller);
+//            String fromId = Objects.requireNonNull(activeCallInvite.getFrom()).replace("client:", "");
+//            SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
+//            String caller = preferences.getString(fromId, preferences.getString("defaultCaller", getString(R.string.unknown_caller)));
+//            tvUserName.setText(caller);
+            String firstname = activeCallInvite.getCustomParameters().get("firstname");
+            String lastname = activeCallInvite.getCustomParameters().get("lastname");
+            String phoneNum = activeCallInvite.getFrom();
+            Log.d(TAG,firstname);
+            Log.d(TAG,lastname);
+            Log.d(TAG,phoneNum);
 
-            btnAnswer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "onCLick");
-                    checkPermissionsAndAccept();
-                }
+            String allNameUsed =
+                    (firstname != null && firstname.isEmpty())  && (lastname != null && lastname.isEmpty()) ?
+                    firstname +" "+ lastname : phoneNum;
+
+
+            tvUserName.setText(allNameUsed);
+
+
+//            btnAnswer.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d(TAG, "onCLick");
+//                    checkPermissionsAndAccept();
+//                }
+//            });
+//
+//            btnReject.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    rejectCallClickListener();
+//                }
+//            });
+            btnAnswer.setOnClickListener(v -> {
+                Log.d(TAG, "click: Call Accepted");
+                AnswerJavaActivity.this.checkPermissionsAndAccept();
             });
 
-            btnReject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rejectCallClickListener();
-                }
-            });
+            btnReject.setOnClickListener(v -> AnswerJavaActivity.this.rejectCallClickListener());
         }
     }
 
@@ -385,6 +402,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MIC_PERMISSION_REQUEST_CODE) {
             if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Microphone permissions needed. Please allow in your application settings.", Toast.LENGTH_LONG).show();

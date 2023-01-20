@@ -1,6 +1,7 @@
 package com.twilio.twilio_voice;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -23,7 +24,9 @@ public class IncomingCallNotificationActivity extends AppCompatActivity {
         newIntent.putExtras(srcIntent);
 
         Log.d(TAG, "startForegroundService");
-        startForegroundService(newIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(newIntent);
+        }
 
         Log.d(TAG, "Finish");
         finish();

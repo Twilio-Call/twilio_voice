@@ -88,8 +88,13 @@ public class IncomingCallNotificationService extends Service {
         Context context = getApplicationContext();
         SharedPreferences preferences = context.getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
         Log.i(TAG, "Setting notification from, " + callInvite.getFrom());
-        String fromId = callInvite.getFrom().replace("client:", "");
-        String caller = preferences.getString(fromId, preferences.getString("defaultCaller", "Unknown caller"));
+//        String fromId = callInvite.getFrom().replace("client:", "");
+//        String caller = preferences.getString(fromId, preferences.getString("defaultCaller", "Unknown caller"));
+        String firstname = callInvite.getCustomParameters().get("firstname");
+        String lastname = callInvite.getCustomParameters().get("lastname");
+        String phone = callInvite.getFrom();
+        String caller = firstname == null && lastname == null ? phone : firstname+" "+lastname;
+
 
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Version O = Android 8
@@ -256,7 +261,13 @@ public class IncomingCallNotificationService extends Service {
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
         boolean prefsShow = preferences.getBoolean("show-notifications", true);
         if (prefsShow) {
-            buildMissedCallNotification(cancelledCallInvite.getFrom(), cancelledCallInvite.getTo());
+//            buildMissedCallNotification(cancelledCallInvite.getFrom(), cancelledCallInvite.getTo());
+            String firstname = cancelledCallInvite.getCustomParameters().get("firstname");
+            String lastname = cancelledCallInvite.getCustomParameters().get("lastname");
+            String phone = cancelledCallInvite.getFrom();
+            String callerMe = firstname == null  && lastname == null ? phone : firstname+" "+lastname;
+            buildMissedCallNotification(callerMe, cancelledCallInvite.getTo());
+
         }
         endForeground();
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);

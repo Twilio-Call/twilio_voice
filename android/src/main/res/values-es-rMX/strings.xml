@@ -8,4 +8,12 @@
     <string name="notification_missed_call">Llamada perdida de %s</string>
     <string name="twilio_call_back">Llamar</string>
     <string name="connected_status">Conectado</string>
+    <string name="app_name">Bettercliniq</string>
+
+    <string name="btn_speaker">Speaker</string>
+    <string name="btn_mute">Mute</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_reject">Reject</string>
+    <string name="btn_hung_up">HungUp</string>
+    <string name="btn_call_back">Call Back</string>
 </resources>
