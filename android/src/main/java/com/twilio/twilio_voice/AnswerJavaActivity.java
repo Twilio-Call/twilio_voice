@@ -171,8 +171,8 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG,phoneNum);
 
             String allNameUsed =
-                    (firstname != null && firstname.isEmpty())  && (lastname != null && lastname.isEmpty()) ?
-                    firstname +" "+ lastname : phoneNum;
+                    (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
+                      phoneNum :firstname +" "+ lastname;
 
 
             tvUserName.setText(allNameUsed);
