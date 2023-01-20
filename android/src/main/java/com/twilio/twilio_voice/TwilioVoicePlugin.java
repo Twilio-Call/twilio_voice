@@ -541,6 +541,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
      * Accept an incoming Call
      */
     private void answer() {
+        appHasStarted = true;
         Log.d(TAG, "Answering call");
         activeCallInvite.accept(this.activity, callListener);
         sendPhoneCallEvents("Answer|" + activeCallInvite.getFrom() + "|" + activeCallInvite.getTo() + formatCustomParams(activeCallInvite.getCustomParameters()));

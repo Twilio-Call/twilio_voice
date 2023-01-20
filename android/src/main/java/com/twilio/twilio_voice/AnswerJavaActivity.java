@@ -1,6 +1,7 @@
 package com.twilio.twilio_voice;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -280,6 +281,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onConnected(@NonNull Call call) {
                 activeCall = call;
