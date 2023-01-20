@@ -158,11 +158,12 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                 Log.d(TAG, "caller from");
                 Log.d(TAG, caller);
 
-                tvUserName.setText(caller);
-                tvCallStatus.setText(getString(R.string.connected_status));
-                startTimer();
+                tvUserName.setText(caller.isEmpty() ? "" : caller);
+//                tvCallStatus.setText(getString(R.string.connected_status));
+
                 Log.d(TAG, "handleCallIntent-");
                 configCallUI();
+                startTimer();
             }else{
                 finish();
             }
