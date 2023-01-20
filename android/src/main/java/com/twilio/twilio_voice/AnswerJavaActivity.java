@@ -120,14 +120,16 @@ public class AnswerJavaActivity extends AppCompatActivity {
                     break;
                 case Constants.ACTION_END_CALL:
                     Log.d(TAG, "ending call" + activeCall != null ? "True" : "False");
+                    activeCall.disconnect();
+                    initiatedDisconnect = true;
+                    finishAndRemoveTask();
+                    finish();
                     if (activeCall == null) {
                         Log.d(TAG, "No active call to end. Returning");
                         finishAndRemoveTask();
                         break;
                     }
-                    activeCall.disconnect();
-                    initiatedDisconnect = true;
-                    finishAndRemoveTask();
+
                     break;
                 case Constants.ACTION_TOGGLE_MUTE:
                     boolean muted = activeCall.isMuted();
@@ -256,6 +258,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
             this.startActivity(intent);
             finishAndRemoveTask();
+            finish();
         }
 
     }
@@ -280,10 +283,10 @@ public class AnswerJavaActivity extends AppCompatActivity {
             @Override
             public void onConnected(@NonNull Call call) {
                 activeCall = call;
-                if (!TwilioVoicePlugin.appHasStarted) {
+//                if (!TwilioVoicePlugin.appHasStarted) {
                     Log.d(TAG, "Connected from BackgroundUI");
                     startAnswerActivity(call);
-                }
+               // }
             }
 
             @Override
