@@ -49,7 +49,8 @@ class TwilioVoice {
   // Android only for TwilioVoicePlugin.java
   Future<void> setAppHasStarted({required bool appHasStarted}) async {
     if (Platform.isAndroid) {
-      await _channel.invokeMethod('setAppHasStarted', <String, dynamic>{"appHasStarted": appHasStarted});
+      await _channel.invokeMethod('setAppHasStarted',
+          <String, dynamic>{"appHasStarted": appHasStarted});
     }
   }
 
@@ -284,9 +285,10 @@ class Call {
     return _channel.invokeMethod('answer', <String, dynamic>{});
   }
 
-  /// Holds active call
-  Future<bool?> holdCall() {
-    return _channel.invokeMethod('holdCall', <String, dynamic>{});
+  /// Sets hold call state. true if call should be held.
+  Future<bool?> holdCall({bool shouldHold = true}) {
+    return _channel
+        .invokeMethod('holdCall', <String, dynamic>{"shouldHold": shouldHold});
   }
 
   /// Toogles mute state to provided value
