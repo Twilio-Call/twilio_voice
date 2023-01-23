@@ -231,6 +231,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG, "Answering call");
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
+            ///finish();
         }
     }
 
