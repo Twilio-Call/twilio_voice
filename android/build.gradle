@@ -29,7 +29,7 @@ android {
         targetCompatibility 1.8
     }
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
     }
     buildTypes {
         release {

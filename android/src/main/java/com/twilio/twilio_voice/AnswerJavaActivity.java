@@ -58,7 +58,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_answer);
@@ -244,9 +244,17 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Constants.CALL_FROM, call.getFrom());
+        String firstname = activeCallInvite.getCustomParameters().get("firstname");
+        String lastname = activeCallInvite.getCustomParameters().get("lastname");
+        String phoneNum = activeCallInvite.getFrom();
+        String allNameUsed =
+                (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
+                        phoneNum :firstname +" "+ lastname;
+        intent.putExtra(Constants.CALL_FROM, allNameUsed);
         startActivity(intent);
+        finish();
         Log.d(TAG, "Connected");
+
     }
 
     private void endCall() {
