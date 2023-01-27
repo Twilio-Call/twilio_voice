@@ -7,6 +7,8 @@
     <color name="text_color">#1E2332</color>
     <color name="red_holo">#FF374B</color>
     <color name="green">#05C35F</color>
+    <color name="lightGray">#647D96</color>
+    <color name="backColorCall">#F0FAFA</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_55">#55FFFFFF</color>

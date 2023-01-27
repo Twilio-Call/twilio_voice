@@ -55,6 +55,8 @@ public class AnswerJavaActivity extends AppCompatActivity {
     private LinearLayout btnReject;
     Call.Listener callListener = callListener();
 
+    static String nameUsed = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +176,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
                     (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
                       phoneNum :firstname +" "+ lastname;
 
-
+            nameUsed = allNameUsed;
             tvUserName.setText(allNameUsed);
 
 
@@ -244,9 +246,11 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Constants.CALL_FROM, call.getFrom());
+//        intent.putExtra(Constants.CALL_FROM, call.getFrom());
+        intent.putExtra(Constants.CALL_FROM, nameUsed.isEmpty() ? call.getFrom() : nameUsed);
         startActivity(intent);
-        Log.d(TAG, "Connected");
+        String view = nameUsed.isEmpty() ? call.getFrom() : nameUsed;
+        Log.d(TAG, "Connected"+view);
     }
 
     private void endCall() {
