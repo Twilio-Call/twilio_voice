@@ -52,28 +52,50 @@
             android:gravity="center"
             android:orientation="horizontal"
             >
+<!--            <ImageView-->
+<!--                android:id="@+id/btnMute"-->
+<!--                android:foreground="@drawable/speakerb"-->
+<!--                android:layout_width="23dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:textAlignment="center"-->
+<!--                android:scaleType="centerInside"-->
+<!--                app:srcCompat="@drawable/speakerg"-->
+<!--                tools:targetApi="m" />-->
             <ImageView
-                android:id="@+id/btnMute"
-                android:foreground="@drawable/speakerb"
-                android:layout_width="23dp"
-                android:layout_height="30dp"
-                android:textAlignment="center"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/speakerg"
-                tools:targetApi="m" />
+                            android:id="@+id/btnMute"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/bg_full_rounded"
+                            android:backgroundTint="@color/white"
+                            android:contentDescription="@string/btn_mute"
+                            android:padding="20dp"
+                            android:src="@drawable/ic_mic_off"
+                            android:tintMode="src_in"
+                            app:tint="@color/lightGray" />
             <Space
                 android:layout_width="66dp"
                 android:layout_height="0dp">
             </Space>
-            <ImageView
-                android:id="@+id/btnOutput"
-                android:foreground="@drawable/speaker2"
-                android:layout_width="23dp"
-                android:layout_height="30dp"
-                android:textAlignment="center"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/speaker1"
-                tools:targetApi="m" />
+                        <ImageView
+                            android:id="@+id/btnOutput"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/bg_full_rounded"
+                            android:backgroundTint="@color/white"
+                            android:contentDescription="@string/btn_speaker"
+                            android:padding="20dp"
+                            android:src="@drawable/ic_volume_2"
+                            android:tintMode="src_in"
+                            app:tint="@color/lightGray" />
+<!--            <ImageView-->
+<!--                android:id="@+id/btnOutput"-->
+<!--                android:foreground="@drawable/speaker2"-->
+<!--                android:layout_width="23dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:textAlignment="center"-->
+<!--                android:scaleType="centerInside"-->
+<!--                app:srcCompat="@drawable/speaker1"-->
+<!--                tools:targetApi="m" />-->
         </LinearLayout>
 
     </LinearLayout>
@@ -87,7 +109,7 @@
         >
         <LinearLayout
             android:id="@+id/btnHangUp"
-            android:layout_width="325dp"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
             android:gravity="center"
 
@@ -97,7 +119,7 @@
             android:visibility="visible">
             <LinearLayout
                 android:id="@+id/layoutReject"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:gravity="center"
                 android:layout_marginLeft="50dp"

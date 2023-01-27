@@ -255,6 +255,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
                         phoneNum :firstname +" "+ lastname;
         intent.putExtra(Constants.CALL_FROM, allNameUsed);
         startActivity(intent);
+
         Log.d(TAG, "Connected"+allNameUsed);
 
     }
