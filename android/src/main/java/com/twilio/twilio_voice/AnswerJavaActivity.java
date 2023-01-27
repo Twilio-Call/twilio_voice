@@ -60,7 +60,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_answer);
@@ -233,7 +233,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG, "Answering call");
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
-            ///finish();
+            finish();
         }
     }
 
@@ -255,7 +255,6 @@ public class AnswerJavaActivity extends AppCompatActivity {
 //                        phoneNum :firstname +" "+ lastname;
         intent.putExtra(Constants.CALL_FROM, namedUsed);
         startActivity(intent);
-      finish();
         Log.d(TAG, "Connected"+namedUsed);
 
     }
