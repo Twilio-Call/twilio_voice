@@ -251,6 +251,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
                 (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
                         phoneNum :firstname +" "+ lastname;
         intent.putExtra(Constants.CALL_FROM, allNameUsed);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
         finish();
         Log.d(TAG, "Connected");
