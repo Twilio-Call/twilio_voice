@@ -180,26 +180,26 @@ public class AnswerJavaActivity extends AppCompatActivity {
             tvUserName.setText(allNameUsed);
            // namedUsed = allNameUsed;
 
-//            btnAnswer.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d(TAG, "onCLick");
-//                    checkPermissionsAndAccept();
-//                }
-//            });
-//
-//            btnReject.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    rejectCallClickListener();
-//                }
-//            });
-            btnAnswer.setOnClickListener(v -> {
-                Log.d(TAG, "click: Call Accepted");
-                AnswerJavaActivity.this.checkPermissionsAndAccept();
+            btnAnswer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onCLick");
+                    checkPermissionsAndAccept();
+                }
             });
 
-            btnReject.setOnClickListener(v -> AnswerJavaActivity.this.rejectCallClickListener());
+            btnReject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rejectCallClickListener();
+                }
+            });
+//            btnAnswer.setOnClickListener(v -> {
+//                Log.d(TAG, "click: Call Accepted");
+//                AnswerJavaActivity.this.checkPermissionsAndAccept();
+//            });
+//
+//            btnReject.setOnClickListener(v -> AnswerJavaActivity.this.rejectCallClickListener());
         }
     }
 
@@ -233,7 +233,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG, "Answering call");
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
-            finish();
+
         }
     }
 

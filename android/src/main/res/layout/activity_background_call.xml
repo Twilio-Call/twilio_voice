@@ -52,15 +52,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             >
-<!--            <ImageView-->
-<!--                android:id="@+id/btnMute"-->
-<!--                android:foreground="@drawable/speakerb"-->
-<!--                android:layout_width="23dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:textAlignment="center"-->
-<!--                android:scaleType="centerInside"-->
-<!--                app:srcCompat="@drawable/speakerg"-->
-<!--                tools:targetApi="m" />-->
+
             <ImageView
                             android:id="@+id/btnMute"
                             android:layout_width="60dp"
@@ -87,21 +79,13 @@
                             android:src="@drawable/ic_volume_2"
                             android:tintMode="src_in"
                             app:tint="@color/lightGray" />
-<!--            <ImageView-->
-<!--                android:id="@+id/btnOutput"-->
-<!--                android:foreground="@drawable/speaker2"-->
-<!--                android:layout_width="23dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:textAlignment="center"-->
-<!--                android:scaleType="centerInside"-->
-<!--                app:srcCompat="@drawable/speaker1"-->
-<!--                tools:targetApi="m" />-->
+
         </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/containerButtons"
+        android:id="@+id/layoutOtherButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -112,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:gravity="center"
-
             android:layout_gravity="center"
             android:background="@drawable/bg_full_rounded"
             android:backgroundTint="@color/red_holo"
@@ -158,132 +141,7 @@
 
             </LinearLayout>
         </LinearLayout>
-<!--        <LinearLayout-->
-<!--            android:id="@+id/layoutCallOptions"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="vertical"-->
-<!--            android:padding="8dp">-->
-<!--        -->
-<!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/containerActiveCall"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:paddingTop="20dp"-->
-<!--            android:visibility="visible"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent">-->
-
-
-<!--            <ImageView-->
-<!--                android:id="@+id/btnMute"-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:background="@drawable/bg_full_rounded"-->
-<!--                android:backgroundTint="@color/white"-->
-<!--                android:contentDescription="@string/btn_mute"-->
-<!--                android:padding="20dp"-->
-<!--                android:src="@drawable/ic_mic_off"-->
-<!--                android:tintMode="src_in"-->
-<!--                app:tint="@color/accent" />-->
-
-<!--            <View-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="10dp" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/btnHangUp"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:background="@drawable/bg_full_rounded"-->
-<!--                android:backgroundTint="@android:color/holo_red_light"-->
-<!--                android:contentDescription="@string/btn_hung_up"-->
-<!--                android:elevation="3dp"-->
-<!--                android:padding="25dp"-->
-<!--                android:src="@drawable/ic_phone_off"-->
-<!--                android:tintMode="src_in"-->
-<!--                app:tint="@color/white" />-->
-
-<!--            <View-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="10dp" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/btnOutput"-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:background="@drawable/bg_full_rounded"-->
-<!--                android:backgroundTint="@color/white"-->
-<!--                android:contentDescription="@string/btn_speaker"-->
-<!--                android:padding="20dp"-->
-<!--                android:src="@drawable/ic_volume_2"-->
-<!--                android:tintMode="src_in"-->
-<!--                app:tint="@color/accent" />-->
-
-
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/containerIncomingCall"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:paddingTop="20dp"-->
-<!--            android:paddingBottom="10dp"-->
-<!--            android:visibility="gone"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/btnReject"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:background="@drawable/bg_full_rounded"-->
-<!--                android:backgroundTint="@color/text_color"-->
-<!--                android:contentDescription="@string/btn_reject"-->
-<!--                android:elevation="3dp"-->
-<!--                android:padding="25dp"-->
-<!--                android:src="@drawable/ic_phone_off"-->
-<!--                app:tint="@color/white" />-->
-
-
-<!--            <View-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="10dp" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/btnAccept"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:background="@drawable/bg_full_rounded"-->
-<!--                android:backgroundTint="@color/red_holo"-->
-<!--                android:contentDescription="@string/btn_accept"-->
-<!--                android:elevation="3dp"-->
-<!--                android:padding="25dp"-->
-<!--                android:src="@drawable/ic_phone_call"-->
-<!--                android:tintMode="src_in"-->
-<!--                app:tint="@color/white" />-->
-
-
-<!--        </LinearLayout>-->
     </RelativeLayout>
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/containerLock"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@android:color/black"-->
-<!--        android:visibility="gone" />-->
 </RelativeLayout>
