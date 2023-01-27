@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -45,7 +46,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private TextView tvCallStatus;
     private ImageView btnMute;
     private ImageView btnOutput;
-    private ImageView btnHangUp;
+    private LinearLayout btnHangUp;
 
     private TextView textTimer;
     private Timer timer;
@@ -64,7 +65,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         btnMute = (ImageView) findViewById(R.id.btnMute);
         btnOutput = (ImageView) findViewById(R.id.btnOutput);
-        btnHangUp = (ImageView) findViewById(R.id.btnHangUp);
+        btnHangUp = (LinearLayout) findViewById(R.id.btnHangUp);
 
         this.textTimer = findViewById(R.id.textTimer);
         this.textTimer.setVisibility(View.GONE);

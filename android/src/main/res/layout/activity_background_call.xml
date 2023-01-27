@@ -137,6 +137,7 @@
 
             </LinearLayout>
         </LinearLayout>
+    </RelativeLayout>
 <!--    <RelativeLayout-->
 <!--        android:id="@+id/containerButtons"-->
 <!--        android:layout_width="match_parent"-->
@@ -262,4 +263,4 @@
         android:background="@android:color/black"
         android:visibility="gone" />
 </RelativeLayout
-       >
+>
