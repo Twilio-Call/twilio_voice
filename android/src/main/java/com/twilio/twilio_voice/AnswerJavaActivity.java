@@ -205,13 +205,13 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
     private void checkPermissionsAndAccept() {
         Log.d(TAG, "Clicked accept");
-        if (!checkPermissionForMicrophone()) {
-            Log.d(TAG, "configCallUI-requestAudioPermissions");
-            requestAudioPermissions();
-        } else {
+        // if (!checkPermissionForMicrophone()) {
+        //     Log.d(TAG, "configCallUI-requestAudioPermissions");
+        //     requestAudioPermissions();
+        // } else {
             Log.d(TAG, "configCallUI-newAnswerCallClickListener");
             acceptCall();
-        }
+        // }
     }
 
 

@@ -213,26 +213,55 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     boolean isMuted = false;
 
     private void configCallUI() {
+        // Log.d(TAG, "configCallUI");
+
+        // btnMute.setOnClickListener(v -> {
+
+        //     Log.d(TAG, "onCLick");
+        //     sendIntent(Constants.ACTION_TOGGLE_MUTE);
+        //     isMuted = !isMuted;
+        //     applyFabState(btnMute, isMuted);
+        // });
+
+        // btnHangUp.setOnClickListener(v -> {
+        //     sendIntent(Constants.ACTION_END_CALL);
+        //     finish();
+        //     close();
+        // });
+        // btnOutput.setOnClickListener(v -> {
+        //     AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        //     boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+        //     audioManager.setSpeakerphoneOn(isOnSpeaker);
+        //     applyFabState(btnOutput, isOnSpeaker);
+        // });
         Log.d(TAG, "configCallUI");
 
-        btnMute.setOnClickListener(v -> {
-
-            Log.d(TAG, "onCLick");
-            sendIntent(Constants.ACTION_TOGGLE_MUTE);
-            isMuted = !isMuted;
-            applyFabState(btnMute, isMuted);
+        btnMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onCLick");
+                sendIntent(Constants.ACTION_TOGGLE_MUTE);
+                isMuted = !isMuted;
+                applyFabState(btnMute, isMuted);
+            }
         });
 
-        btnHangUp.setOnClickListener(v -> {
-            sendIntent(Constants.ACTION_END_CALL);
-            finish();
-            close();
+        btnHangUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendIntent(Constants.ACTION_END_CALL);
+                finish();
+
+            }
         });
-        btnOutput.setOnClickListener(v -> {
-            AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-            boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-            audioManager.setSpeakerphoneOn(isOnSpeaker);
-            applyFabState(btnOutput, isOnSpeaker);
+        btnOutput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+                audioManager.setSpeakerphoneOn(isOnSpeaker);
+                applyFabState(btnOutput, isOnSpeaker);
+            }
         });
 
     }
