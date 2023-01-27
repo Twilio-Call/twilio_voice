@@ -55,10 +55,12 @@ public class AnswerJavaActivity extends AppCompatActivity {
     private LinearLayout btnReject;
     Call.Listener callListener = callListener();
 
+    static String namedUsed = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_answer);
@@ -176,7 +178,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
 
             tvUserName.setText(allNameUsed);
-
+            namedUsed = allNameUsed;
 
 //            btnAnswer.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -241,19 +243,20 @@ public class AnswerJavaActivity extends AppCompatActivity {
     }
 
     private void startAnswerActivity(Call call) {
+
         Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        String firstname = activeCallInvite.getCustomParameters().get("firstname");
-        String lastname = activeCallInvite.getCustomParameters().get("lastname");
-        String phoneNum = activeCallInvite.getFrom();
-        String allNameUsed =
-                (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
-                        phoneNum :firstname +" "+ lastname;
-        intent.putExtra(Constants.CALL_FROM, allNameUsed);
+//        String firstname = activeCallInvite.getCustomParameters().get("firstname");
+//        String lastname = activeCallInvite.getCustomParameters().get("lastname");
+//        String phoneNum = activeCallInvite.getFrom();
+//        String allNameUsed =
+//                (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
+//                        phoneNum :firstname +" "+ lastname;
+        intent.putExtra(Constants.CALL_FROM, namedUsed);
         startActivity(intent);
-        finish();
-        Log.d(TAG, "Connected");
+      finish();
+        Log.d(TAG, "Connected"+namedUsed);
 
     }
 
