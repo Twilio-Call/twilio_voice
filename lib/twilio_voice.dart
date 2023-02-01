@@ -133,6 +133,23 @@ class TwilioVoice {
     return _channel.invokeMethod<String?>('getParams', <String, dynamic>{});
   }
 
+  //Put params Try
+  Future<String?> lastTerminate({String? text}) {
+    return _channel.invokeMethod<String?>(
+        'lastTerminate', <String, dynamic>{"lastTerminate": text!});
+  }
+
+  //Remove params Try
+  Future<String?> removeLastTerminate({String? text}) {
+    return _channel.invokeMethod<String?>(
+        'removeLastTerminate', <String, dynamic>{"removeLastTerminate": text!});
+  }
+
+  //Get params Try
+  Future<String?> getAction() {
+    return _channel.invokeMethod<String?>('getAction', <String, dynamic>{});
+  }
+
   /// Android-only, shows background call UI
   Future<bool?> showBackgroundCallUI() {
     return _channel.invokeMethod("backgroundCallUI", {});

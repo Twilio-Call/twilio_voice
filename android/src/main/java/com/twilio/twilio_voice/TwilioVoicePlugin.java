@@ -61,6 +61,8 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
     // static boolean hasStarted = false;
     static boolean appHasStarted = false;
 
+    static boolean lastActionterminate = false;
+
     private String accessToken;
     private AudioManager audioManager;
     private int savedAudioMode = AudioManager.MODE_INVALID;
@@ -485,7 +487,10 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
                 added = true;
             }
             result.success(added);
-        } else if (call.method.equals("hasMicPermission")) {
+        } 
+       
+        
+        else if (call.method.equals("hasMicPermission")) {
             result.success(this.checkPermissionForMicrophone());
         } else if (call.method.equals("requestMicPermission")) {
             sendPhoneCallEvents("LOG|requesting mic permission");
@@ -540,7 +545,25 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             String allNameUsed = firstname == null || lastname ==null ? phoneNum : firstname +" "+ lastname;
             Log.d(TAG, "Get params user invite "+ allNameUsed);
             result.success(allNameUsed);
-        }else {
+        } //// added from this line
+        else if(call.method.equals("lastTerminate")){
+            String lastLT = call.argument("lastTerminate");
+            SharedPreferences.Editor edit = pSharedPref.edit();
+            edit.putString("lastTerminate", lastLT);
+            edit.apply();
+        }else if(call.method.equals("removeLastTerminate")){
+            String removeLT = call.argument("removeLastTerminate");
+             SharedPreferences.Editor edit = pSharedPref.edit();
+                edit.remove(removeLT);
+                edit.apply();
+                
+        }else if(call.method.equals("getAction")){
+            SharedPreferences pref = activity.getSharedPreferences(TwilioPreferences,Context.MODE_PRIVATE);
+            String getApp = pref.getString("lastTerminate",pref.getString("lastTerminate","UNKNOWN"));
+            result.success(getApp);
+        }
+        
+        else {
             result.notImplemented();
         }
     }
