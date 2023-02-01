@@ -552,15 +552,16 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             edit.putString("lastTerminate", lastLT);
             edit.apply();
         }else if(call.method.equals("removeLastTerminate")){
-            String removeLT = call.argument("removeLastTerminate");
+
              SharedPreferences.Editor edit = pSharedPref.edit();
-                edit.remove(removeLT);
+                edit.remove("lastTerminate");
                 edit.apply();
                 
         }else if(call.method.equals("getAction")){
             SharedPreferences pref = activity.getSharedPreferences(TwilioPreferences,Context.MODE_PRIVATE);
             String getApp = pref.getString("lastTerminate",pref.getString("lastTerminate","UNKNOWN"));
             result.success(getApp);
+
         }
         
         else {

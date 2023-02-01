@@ -141,8 +141,8 @@ class TwilioVoice {
 
   //Remove params Try
   Future<String?> removeLastTerminate({String? text}) {
-    return _channel.invokeMethod<String?>(
-        'removeLastTerminate', <String, dynamic>{"removeLastTerminate": text!});
+    return _channel
+        .invokeMethod<String?>('removeLastTerminate', <String, dynamic>{});
   }
 
   //Get params Try
