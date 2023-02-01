@@ -95,7 +95,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         register(flutterPluginBinding.getBinaryMessenger(), this, flutterPluginBinding.getApplicationContext());
         /*hasStarted = true;*/
-       // appHasStarted = true;
+        appHasStarted = true;
     }
 
     private static void register(BinaryMessenger messenger, TwilioVoicePlugin plugin, Context context) {
@@ -559,7 +559,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
                 
         }else if(call.method.equals("getAction")){
             SharedPreferences pref = activity.getSharedPreferences(TwilioPreferences,Context.MODE_PRIVATE);
-            String getApp = pref.getString("lastTerminate",pref.getString("lastTerminate","UNKNOWN"));
+            String getApp = pref.getString("lastTerminate","");
             result.success(getApp);
 
         }
