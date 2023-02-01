@@ -180,7 +180,6 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("InvalidWakeLockTag")
     private void activateSensor() {
         if (wakeLock == null) {
             Log.d(TAG, "New wakeLog");
@@ -189,7 +188,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         if (!wakeLock.isHeld()) {
             Log.d(TAG, "wakeLog acquire");
             wakeLock.acquire(10*60*1000L /*10 minutes*/);
-        } 
+        }
     }
 
     private void deactivateSensor() {
@@ -215,57 +214,57 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     boolean isMuted = false;
 
     private void configCallUI() {
-         Log.d(TAG, "configCallUI");
-
-         btnMute.setOnClickListener(v -> {
-
-             Log.d(TAG, "onCLick");
-             sendIntent(Constants.ACTION_TOGGLE_MUTE);
-             isMuted = !isMuted;
-             applyFabState(btnMute, isMuted);
-         });
-
-         btnHangUp.setOnClickListener(v -> {
-             sendIntent(Constants.ACTION_END_CALL);
-             finish();
-             close();
-         });
-         btnOutput.setOnClickListener(v -> {
-             AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-             boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-             audioManager.setSpeakerphoneOn(isOnSpeaker);
-             applyFabState(btnOutput, isOnSpeaker);
-         });
-//        Log.d(TAG, "configCallUI");
+//         Log.d(TAG, "configCallUI");
 //
-//        btnMute.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onCLick");
-//                sendIntent(Constants.ACTION_TOGGLE_MUTE);
-//                isMuted = !isMuted;
-//                applyFabState(btnMute, isMuted);
-//            }
-//        });
+//         btnMute.setOnClickListener(v -> {
 //
-//        btnHangUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sendIntent(Constants.ACTION_END_CALL);
-//                finishAndRemoveTask();
-//                finish();
+//             Log.d(TAG, "onCLick");
+//             sendIntent(Constants.ACTION_TOGGLE_MUTE);
+//             isMuted = !isMuted;
+//             applyFabState(btnMute, isMuted);
+//         });
 //
-//            }
-//        });
-//        btnOutput.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-//                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-//                audioManager.setSpeakerphoneOn(isOnSpeaker);
-//                applyFabState(btnOutput, isOnSpeaker);
-//            }
-//        });
+//         btnHangUp.setOnClickListener(v -> {
+//             sendIntent(Constants.ACTION_END_CALL);
+//             finish();
+//             close();
+//         });
+//         btnOutput.setOnClickListener(v -> {
+//             AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+//             boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+//             audioManager.setSpeakerphoneOn(isOnSpeaker);
+//             applyFabState(btnOutput, isOnSpeaker);
+//         });
+        Log.d(TAG, "configCallUI");
+
+        btnMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onCLick");
+                sendIntent(Constants.ACTION_TOGGLE_MUTE);
+                isMuted = !isMuted;
+                applyFabState(btnMute, isMuted);
+            }
+        });
+
+        btnHangUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendIntent(Constants.ACTION_END_CALL);
+                finishAndRemoveTask();
+                finish();
+
+            }
+        });
+        btnOutput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+                audioManager.setSpeakerphoneOn(isOnSpeaker);
+                applyFabState(btnOutput, isOnSpeaker);
+            }
+        });
 
     }
 
@@ -283,9 +282,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         ColorStateList colorStateList;
 
         if (enabled) {
-            colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white_55));
+            colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.back_white));
         } else {
-            colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent));
+            colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.lightGray));
         }
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            button.setBackgroundTintList(colorStateList);
