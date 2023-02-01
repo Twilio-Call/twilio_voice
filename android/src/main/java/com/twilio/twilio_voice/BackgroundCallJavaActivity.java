@@ -19,6 +19,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -213,66 +215,67 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     boolean isMuted = false;
 
     private void configCallUI() {
-        // Log.d(TAG, "configCallUI");
+         Log.d(TAG, "configCallUI");
 
-        // btnMute.setOnClickListener(v -> {
+         btnMute.setOnClickListener(v -> {
 
-        //     Log.d(TAG, "onCLick");
-        //     sendIntent(Constants.ACTION_TOGGLE_MUTE);
-        //     isMuted = !isMuted;
-        //     applyFabState(btnMute, isMuted);
-        // });
+             Log.d(TAG, "onCLick");
+             sendIntent(Constants.ACTION_TOGGLE_MUTE);
+             isMuted = !isMuted;
+             applyFabState(btnMute, isMuted);
+         });
 
-        // btnHangUp.setOnClickListener(v -> {
-        //     sendIntent(Constants.ACTION_END_CALL);
-        //     finish();
-        //     close();
-        // });
-        // btnOutput.setOnClickListener(v -> {
-        //     AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        //     boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-        //     audioManager.setSpeakerphoneOn(isOnSpeaker);
-        //     applyFabState(btnOutput, isOnSpeaker);
-        // });
-        Log.d(TAG, "configCallUI");
-
-        btnMute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onCLick");
-                sendIntent(Constants.ACTION_TOGGLE_MUTE);
-                isMuted = !isMuted;
-                applyFabState(btnMute, isMuted);
-            }
-        });
-
-        btnHangUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendIntent(Constants.ACTION_END_CALL);
-                finishAndRemoveTask();
-                finish();
-
-            }
-        });
-        btnOutput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-                audioManager.setSpeakerphoneOn(isOnSpeaker);
-                applyFabState(btnOutput, isOnSpeaker);
-            }
-        });
+         btnHangUp.setOnClickListener(v -> {
+             sendIntent(Constants.ACTION_END_CALL);
+             finish();
+             close();
+         });
+         btnOutput.setOnClickListener(v -> {
+             AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+             boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+             audioManager.setSpeakerphoneOn(isOnSpeaker);
+             applyFabState(btnOutput, isOnSpeaker);
+         });
+//        Log.d(TAG, "configCallUI");
+//
+//        btnMute.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onCLick");
+//                sendIntent(Constants.ACTION_TOGGLE_MUTE);
+//                isMuted = !isMuted;
+//                applyFabState(btnMute, isMuted);
+//            }
+//        });
+//
+//        btnHangUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendIntent(Constants.ACTION_END_CALL);
+//                finishAndRemoveTask();
+//                finish();
+//
+//            }
+//        });
+//        btnOutput.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+//                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+//                audioManager.setSpeakerphoneOn(isOnSpeaker);
+//                applyFabState(btnOutput, isOnSpeaker);
+//            }
+//        });
 
     }
 
 
     @Override
     public void onBackPressed() {
-        sendIntent(Constants.ACTION_END_CALL);
-        finish();
-        close();
+        // sendIntent(Constants.ACTION_END_CALL);
+        // finish();
+        // close();
+        Toast.makeText(BackgroundCallJavaActivity.this,"Cannot do action on back pressed.",Toast.LENGTH_LONG).show();
     }
     private void applyFabState(ImageView button, Boolean enabled) {
         // Set fab as pressed when call is on hold
