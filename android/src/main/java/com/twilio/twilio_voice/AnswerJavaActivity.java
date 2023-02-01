@@ -35,7 +35,7 @@ import java.util.Objects;
 
 
 public class AnswerJavaActivity extends AppCompatActivity {
-
+    private SharedPreferences pSharedPref;
     private static String TAG = "AnswerActivity";
     public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
 
