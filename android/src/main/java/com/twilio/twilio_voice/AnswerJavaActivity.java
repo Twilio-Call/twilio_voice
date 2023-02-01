@@ -233,6 +233,9 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG, "Answering call");
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
+             SharedPreferences.Editor edit = pSharedPref.edit();
+            edit.putString("lastTerminate", "isTerminate");
+            edit.apply();
 
         }
     }
