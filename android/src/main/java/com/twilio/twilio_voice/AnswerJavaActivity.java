@@ -35,7 +35,7 @@ import java.util.Objects;
 
 
 public class AnswerJavaActivity extends AppCompatActivity {
-    private SharedPreferences pSharedPref;
+
     private static String TAG = "AnswerActivity";
     public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
 
@@ -56,7 +56,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
     Call.Listener callListener = callListener();
 
    // static String namedUsed = "";
-
+   private SharedPreferences pSharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +98,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             }
 
         }
-
+        pSharedPref= getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
         handleIncomingCallIntent(getIntent());
     }
 
