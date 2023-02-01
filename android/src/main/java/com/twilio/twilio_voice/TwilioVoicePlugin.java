@@ -95,7 +95,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         register(flutterPluginBinding.getBinaryMessenger(), this, flutterPluginBinding.getApplicationContext());
         /*hasStarted = true;*/
-        appHasStarted = true;
+//        appHasStarted = true;
     }
 
     private static void register(BinaryMessenger messenger, TwilioVoicePlugin plugin, Context context) {
