@@ -225,6 +225,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Log.d(TAG, "Clicked accept startService");
         startService(acceptIntent);
         Log.d(TAG, "isLocked: " + isLocked() + " appHasStarted: " + TwilioVoicePlugin.appHasStarted);
+        finish();
         if (TwilioVoicePlugin.appHasStarted) {
             Log.d(TAG, "AnswerJavaActivity Finish");
             finish();
