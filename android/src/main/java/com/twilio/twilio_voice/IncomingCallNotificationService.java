@@ -373,10 +373,10 @@ public class IncomingCallNotificationService extends Service {
         pluginIntent.putExtra(Constants.INCOMING_CALL_INVITE, callInvite);
         LocalBroadcastManager.getInstance(this).sendBroadcast(pluginIntent);
         Log.i(TAG, "AppHasStarted " + TwilioVoicePlugin.appHasStarted + " sdk>=29 and !isAppVisible() " + (Build.VERSION.SDK_INT >= 29 && !isAppVisible()));
-//        if (TwilioVoicePlugin.appHasStarted || (Build.VERSION.SDK_INT >= 29 && !isAppVisible())) {
-//            return;
-//
-//        }
+        if (TwilioVoicePlugin.appHasStarted || (Build.VERSION.SDK_INT >= 29 && !isAppVisible())) {
+            return;
+
+        }
         Log.i(TAG, "Starting AnswerActivity from IncomingCallNotificationService");
         startAnswerActivity(callInvite, notificationId);
     }
