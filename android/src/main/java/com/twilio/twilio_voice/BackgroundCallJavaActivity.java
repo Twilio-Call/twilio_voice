@@ -189,7 +189,8 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private void activateSensor() {
         if (wakeLock == null) {
             Log.d(TAG, "New wakeLog");
-            wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "app:in call");
+            //wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "app:in call");
+            wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "incall");
         }
         if (!wakeLock.isHeld()) {
             Log.d(TAG, "wakeLog acquire");
@@ -239,8 +240,10 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                sendIntent(Constants.ACTION_END_CALL);
-               finish();
 
+               close();
+               finish();
+               System.exit(0);
            }
        });
        btnOutput.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +267,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     private void hangUpNow(){
         sendIntent(Constants.ACTION_END_CALL);
-        finishAndRemoveTask();
+
         close();
         finish();
     }
@@ -297,7 +300,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             button.setBackgroundTintList(colorStateList);
         }
-        button.setBackgroundTintList(colorStateList);
+       // button.setBackgroundTintList(colorStateList);
     }
 
     private void sendIntent(String action) {

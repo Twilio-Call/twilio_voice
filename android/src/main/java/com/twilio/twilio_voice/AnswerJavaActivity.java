@@ -125,11 +125,11 @@ public class AnswerJavaActivity extends AppCompatActivity {
                     Log.d(TAG, "ending call" + activeCall != null ? "True" : "False");
                     activeCall.disconnect();
                     initiatedDisconnect = true;
-                    finishAndRemoveTask();
+//                    finishAndRemoveTask();
                     finish();
                     if (activeCall == null) {
                         Log.d(TAG, "No active call to end. Returning");
-                        finishAndRemoveTask();
+//                        finishAndRemoveTask();
                         break;
                     }
 
@@ -285,7 +285,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             intent.setAction(Constants.ACTION_CANCEL_CALL);
 
             this.startActivity(intent);
-            finishAndRemoveTask();
+//            finishAndRemoveTask();
             finish();
         }
 
