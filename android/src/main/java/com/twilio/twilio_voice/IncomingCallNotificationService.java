@@ -336,6 +336,7 @@ public class IncomingCallNotificationService extends Service {
     private void handleIncomingCall(CallInvite callInvite, int notificationId) {
         Log.i(TAG, "handle incoming call");
         SoundPoolManager.getInstance(this).playRinging();
+        gotoAppOwn();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
