@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,9 +45,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     private TextView tvUserName;
     private TextView tvCallStatus;
-    private ImageView btnMute;
-    private ImageView btnOutput;
-    private LinearLayout btnHangUp;
+    public ImageView btnMute;
+    public ImageView btnOutput;
+    public LinearLayout btnHangUp;
 
     private TextView textTimer;
     private Timer timer;
@@ -71,6 +70,12 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
         this.textTimer = findViewById(R.id.textTimer);
         this.textTimer.setVisibility(View.GONE);
+        this.btnMute.setClickable(true);
+        this.btnMute.bringToFront();
+        this.btnOutput.setClickable(true);
+        this.btnOutput.bringToFront();
+        this.btnHangUp.setClickable(true);
+        this.btnHangUp.bringToFront();
 
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
@@ -215,54 +220,14 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     boolean isMuted = false;
 
    private void configCallUI() {
-//         Log.d(TAG, "configCallUI");
-//
-//         btnMute.setOnClickListener(v -> {
-//
-//             Log.d(TAG, "onCLick");
-//             sendIntent(Constants.ACTION_TOGGLE_MUTE);
-//             isMuted = !isMuted;
-//             applyFabState(btnMute, isMuted);
-//             Toast.makeText(BackgroundCallJavaActivity.this,"MUTE CLICK",Toast.LENGTH_LONG).show();
-//         });
-//
-//         btnHangUp.setOnClickListener(v -> {
-//             sendIntent(Constants.ACTION_END_CALL);
-//             finish();
-//             close();
-//             Toast.makeText(BackgroundCallJavaActivity.this,"HANG UP CLICK",Toast.LENGTH_LONG).show();
-//
-//         });
-//         btnOutput.setOnClickListener(v -> {
-//             AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-//             boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-//             audioManager.setSpeakerphoneOn(isOnSpeaker);
-//             applyFabState(btnOutput, isOnSpeaker);
-//             Toast.makeText(BackgroundCallJavaActivity.this,"SPEAKER CLICK",Toast.LENGTH_LONG).show();
-//
-//         });
+
         Log.d(TAG, "configCallUI");
 
-        btnMute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               muted();
-            }
-        });
+        btnMute.setOnClickListener(v -> muted());
 
-        btnHangUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hangUpNow();
+        btnHangUp.setOnClickListener(v -> hangUpNow());
+        btnOutput.setOnClickListener(v -> speakerOn());
 
-            }
-        });
-        btnOutput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               speakerOn();
-            }
-        });
 
     }
     private  void muted(){
@@ -275,6 +240,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private void hangUpNow(){
         sendIntent(Constants.ACTION_END_CALL);
         finishAndRemoveTask();
+        close();
         finish();
     }
     private void speakerOn(){
@@ -282,6 +248,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
         audioManager.setSpeakerphoneOn(isOnSpeaker);
         applyFabState(btnOutput, isOnSpeaker);
+
     }
 
 
@@ -302,9 +269,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         } else {
             colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.lightGray));
         }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            button.setBackgroundTintList(colorStateList);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            button.setBackgroundTintList(colorStateList);
+        }
         button.setBackgroundTintList(colorStateList);
     }
 
