@@ -123,6 +123,7 @@ public class IncomingCallNotificationService extends Service {
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setColor(Color.rgb(20, 10, 200)).build();
         }
+
     }
 
     public static String getApplicationName(Context context) {
@@ -187,10 +188,18 @@ public class IncomingCallNotificationService extends Service {
                         .addAction(android.R.drawable.ic_menu_delete, getString(R.string.decline), piRejectIntent)
                         .addAction(android.R.drawable.ic_menu_call, getString(R.string.answer), piAcceptIntent)
                         .setFullScreenIntent(pendingIntent, true);
-
+        gotoAppOwn();
         return builder.build();
     }
-
+    private void gotoAppOwn(){
+        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
+        if(appIntent != null){
+            //startActivity(appIntent);
+            Log.d(TAG, "Open app");
+        }else{
+            Log.d(TAG, "There is no package available in android");
+        }
+    }
     @TargetApi(Build.VERSION_CODES.O)
     private String createChannel(int channelImportance) {
         Log.i(TAG, "creating channel!");
@@ -337,7 +346,7 @@ public class IncomingCallNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
-        gotoAppOwn();
+        //gotoAppOwn();
         sendCallInviteToActivity(callInvite, notificationId);
     }
 
@@ -345,14 +354,7 @@ public class IncomingCallNotificationService extends Service {
         stopForeground(true);
     }
 
-    private void gotoAppOwn(){
-        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
-        if(appIntent != null){
-            startActivity(appIntent);
-        }else{
-            Log.d(TAG, "There is no package available in android");
-        }
-    }
+
 
     @TargetApi(Build.VERSION_CODES.O)
     private void setCallInProgressNotification(CallInvite callInvite, int notificationId) {
