@@ -47,7 +47,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private TextView tvCallStatus;
     public ImageView btnMute;
     public ImageView btnOutput;
-    public ImageView  btnHangUp;
+    public LinearLayout  btnHangUp;
 
     private TextView textTimer;
     private Timer timer;
@@ -66,16 +66,16 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         btnMute = (ImageView) findViewById(R.id.btnMute);
         btnOutput = (ImageView) findViewById(R.id.btnOutput);
-        btnHangUp = (ImageView ) findViewById(R.id.btnHangUp);
+        btnHangUp = (LinearLayout ) findViewById(R.id.btnHangUp);
 
         this.textTimer = findViewById(R.id.textTimer);
         this.textTimer.setVisibility(View.GONE);
-        this.btnMute.setClickable(true);
-        this.btnMute.bringToFront();
-        this.btnOutput.setClickable(true);
-        this.btnOutput.bringToFront();
-        this.btnHangUp.setClickable(true);
-        this.btnHangUp.bringToFront();
+//        this.btnMute.setClickable(true);
+//        this.btnMute.bringToFront();
+//        this.btnOutput.setClickable(true);
+//        this.btnOutput.bringToFront();
+//        this.btnHangUp.setClickable(true);
+//        this.btnHangUp.bringToFront();
 
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
@@ -223,10 +223,35 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
         Log.d(TAG, "configCallUI");
 
-        btnMute.setOnClickListener(v -> muted());
+       Log.d(TAG, "configCallUI");
 
-        btnHangUp.setOnClickListener(v -> hangUpNow());
-        btnOutput.setOnClickListener(v -> speakerOn());
+       btnMute.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Log.d(TAG, "onCLick");
+               sendIntent(Constants.ACTION_TOGGLE_MUTE);
+               isMuted = !isMuted;
+               applyFabState(btnMute, isMuted);
+           }
+       });
+
+       btnHangUp.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               sendIntent(Constants.ACTION_END_CALL);
+               finish();
+
+           }
+       });
+       btnOutput.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+               boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
+               audioManager.setSpeakerphoneOn(isOnSpeaker);
+               applyFabState(btnOutput, isOnSpeaker);
+           }
+       });
 
 
     }
