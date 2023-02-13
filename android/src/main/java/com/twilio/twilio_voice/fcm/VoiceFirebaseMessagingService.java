@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterCallbackInformation;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import android.content.pm.PackageManager;
 
 
 import androidx.annotation.NonNull;
@@ -65,7 +66,7 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         // If application is running in the foreground use local broadcast to handle message.
         // Otherwise use the background isolate to handle message.
-
+        gotoAppOwn();
         if (remoteMessage.getData().size() > 0) {
             boolean valid = Voice.handleMessage(this, remoteMessage.getData(), new MessageListener() {
                 @Override
@@ -106,6 +107,16 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra(Constants.CANCELLED_CALL_INVITE, cancelledCallInvite);
 
         startService(intent);
+    }
+
+    private void gotoAppOwn(){
+        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
+        if(appIntent != null){
+            startActivity(appIntent);
+            Log.d(TAG, "Open app");
+        }else{
+            Log.d(TAG, "There is no package available in android");
+        }
     }
 }
 
