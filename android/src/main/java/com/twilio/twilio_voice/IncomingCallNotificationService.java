@@ -337,11 +337,21 @@ public class IncomingCallNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
+        gotoAppOwn();
         sendCallInviteToActivity(callInvite, notificationId);
     }
 
     private void endForeground() {
         stopForeground(true);
+    }
+
+    private void gotoAppOwn(){
+        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
+        if(appIntent != null){
+            startActivity(appIntent);
+        }else{
+            Log.d(TAG, "There is no package available in android");
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
