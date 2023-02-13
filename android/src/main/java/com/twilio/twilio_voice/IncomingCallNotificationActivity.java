@@ -31,7 +31,7 @@ public class IncomingCallNotificationActivity extends AppCompatActivity {
         Log.d(TAG, "Finish");
 
         finish();
-        gotoAppOwn();
+        //gotoAppOwn();
     }
 
     private void gotoAppOwn(){

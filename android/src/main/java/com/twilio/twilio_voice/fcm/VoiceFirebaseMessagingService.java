@@ -66,7 +66,7 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         // If application is running in the foreground use local broadcast to handle message.
         // Otherwise use the background isolate to handle message.
-        gotoAppOwn();
+        // gotoAppOwn();
         if (remoteMessage.getData().size() > 0) {
             boolean valid = Voice.handleMessage(this, remoteMessage.getData(), new MessageListener() {
                 @Override
