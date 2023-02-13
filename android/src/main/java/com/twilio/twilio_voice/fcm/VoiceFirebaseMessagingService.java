@@ -66,7 +66,6 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         // If application is running in the foreground use local broadcast to handle message.
         // Otherwise use the background isolate to handle message.
-        // gotoAppOwn();
         if (remoteMessage.getData().size() > 0) {
             boolean valid = Voice.handleMessage(this, remoteMessage.getData(), new MessageListener() {
                 @Override
@@ -109,15 +108,6 @@ public class VoiceFirebaseMessagingService extends FirebaseMessagingService {
         startService(intent);
     }
 
-    private void gotoAppOwn(){
-        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
-        if(appIntent != null){
-            startActivity(appIntent);
-            Log.d(TAG, "Open app");
-        }else{
-            Log.d(TAG, "There is no package available in android");
-        }
-    }
 }
 
 

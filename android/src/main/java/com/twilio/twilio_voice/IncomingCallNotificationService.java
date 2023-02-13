@@ -336,7 +336,6 @@ public class IncomingCallNotificationService extends Service {
     private void handleIncomingCall(CallInvite callInvite, int notificationId) {
         Log.i(TAG, "handle incoming call");
         SoundPoolManager.getInstance(this).playRinging();
-        gotoAppOwn();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
@@ -392,15 +391,6 @@ public class IncomingCallNotificationService extends Service {
         startActivity(intent);
     }
 
-    private void gotoAppOwn(){
-        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
-        if(appIntent != null){
-            startActivity(appIntent);
-            Log.d(TAG, "Open app");
-        }else{
-            Log.d(TAG, "There is no package available in android");
-        }
-    }
 
     private boolean isAppVisible() {
         return ProcessLifecycleOwner
