@@ -47,7 +47,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private TextView tvCallStatus;
     public ImageView btnMute;
     public ImageView btnOutput;
-    public LinearLayout btnHangUp;
+    public ImageView  btnHangUp;
 
     private TextView textTimer;
     private Timer timer;
@@ -56,7 +56,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_background_call);
@@ -66,7 +66,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         btnMute = (ImageView) findViewById(R.id.btnMute);
         btnOutput = (ImageView) findViewById(R.id.btnOutput);
-        btnHangUp = (LinearLayout) findViewById(R.id.btnHangUp);
+        btnHangUp = (ImageView ) findViewById(R.id.btnHangUp);
 
         this.textTimer = findViewById(R.id.textTimer);
         this.textTimer.setVisibility(View.GONE);
