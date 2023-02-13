@@ -42,6 +42,7 @@ public class IncomingCallNotificationService extends Service {
             Log.i(TAG, "is callInvite null: " + (callInvite != null));
             switch (action) {
                 case Constants.ACTION_INCOMING_CALL:
+                    //gotoAppOwn();
                     handleIncomingCall(callInvite, notificationId);
                     break;
                 case Constants.ACTION_ACCEPT:
@@ -188,18 +189,10 @@ public class IncomingCallNotificationService extends Service {
                         .addAction(android.R.drawable.ic_menu_delete, getString(R.string.decline), piRejectIntent)
                         .addAction(android.R.drawable.ic_menu_call, getString(R.string.answer), piAcceptIntent)
                         .setFullScreenIntent(pendingIntent, true);
-        gotoAppOwn();
+
         return builder.build();
     }
-    private void gotoAppOwn(){
-        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
-        if(appIntent != null){
-            //startActivity(appIntent);
-            Log.d(TAG, "Open app");
-        }else{
-            Log.d(TAG, "There is no package available in android");
-        }
-    }
+
     @TargetApi(Build.VERSION_CODES.O)
     private String createChannel(int channelImportance) {
         Log.i(TAG, "creating channel!");
@@ -249,6 +242,7 @@ public class IncomingCallNotificationService extends Service {
             LocalBroadcastManager.getInstance(this).sendBroadcast(activeCallIntent);
             Log.i(TAG, "sending broadcast intent");
         }
+
     }
 
     private void reject(CallInvite callInvite) {
@@ -351,6 +345,7 @@ public class IncomingCallNotificationService extends Service {
     }
 
     private void endForeground() {
+        gotoAppOwn();
         stopForeground(true);
     }
 
@@ -390,6 +385,7 @@ public class IncomingCallNotificationService extends Service {
     }
 
     private void startAnswerActivity(CallInvite callInvite, int notificationId) {
+       // gotoAppOwn();
         Intent intent = new Intent(this, AnswerJavaActivity.class);
         intent.setAction(Constants.ACTION_INCOMING_CALL);
         intent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, notificationId);
@@ -397,6 +393,16 @@ public class IncomingCallNotificationService extends Service {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private void gotoAppOwn(){
+        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
+        if(appIntent != null){
+            startActivity(appIntent);
+            Log.d(TAG, "Open app");
+        }else{
+            Log.d(TAG, "There is no package available in android");
+        }
     }
 
     private boolean isAppVisible() {
