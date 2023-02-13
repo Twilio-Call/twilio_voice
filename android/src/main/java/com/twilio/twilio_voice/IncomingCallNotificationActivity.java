@@ -22,7 +22,7 @@ public class IncomingCallNotificationActivity extends AppCompatActivity {
         Intent newIntent = new Intent(getApplicationContext(), IncomingCallNotificationService.class);
         newIntent.setAction(action);
         newIntent.putExtras(srcIntent);
-
+        //gotoAppOwn();
         Log.d(TAG, "startForegroundService");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(newIntent);
