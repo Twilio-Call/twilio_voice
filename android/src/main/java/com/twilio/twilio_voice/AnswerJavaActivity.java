@@ -248,18 +248,18 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
     private void startAnswerActivity(Call call) {
 
-       Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
-       intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//       Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
+//       intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         String firstname = activeCallInvite.getCustomParameters().get("firstname");
         String lastname = activeCallInvite.getCustomParameters().get("lastname");
         String phoneNum = activeCallInvite.getFrom();
         String allNameUsed =
                 (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
                         phoneNum :firstname +" "+ lastname;
-       intent.putExtra(Constants.CALL_FROM, allNameUsed);
-       startActivity(intent);
-       // gotoAppOwn();
+//       intent.putExtra(Constants.CALL_FROM, allNameUsed);
+//       startActivity(intent);
+        gotoAppOwn();
 
         Log.d(TAG, "Connected"+allNameUsed);
 

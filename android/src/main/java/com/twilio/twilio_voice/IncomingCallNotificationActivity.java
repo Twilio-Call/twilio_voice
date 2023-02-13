@@ -27,10 +27,11 @@ public class IncomingCallNotificationActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(newIntent);
         }
-
-        Log.d(TAG, "Finish");
         gotoAppOwn();
+        Log.d(TAG, "Finish");
+
         finish();
+
     }
 
     private void gotoAppOwn(){
