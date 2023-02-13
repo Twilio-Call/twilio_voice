@@ -42,7 +42,6 @@ public class IncomingCallNotificationService extends Service {
             Log.i(TAG, "is callInvite null: " + (callInvite != null));
             switch (action) {
                 case Constants.ACTION_INCOMING_CALL:
-                    //gotoAppOwn();
                     handleIncomingCall(callInvite, notificationId);
                     break;
                 case Constants.ACTION_ACCEPT:
@@ -340,12 +339,10 @@ public class IncomingCallNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
-        //gotoAppOwn();
         sendCallInviteToActivity(callInvite, notificationId);
     }
 
     private void endForeground() {
-        //gotoAppOwn();
         stopForeground(true);
     }
 
@@ -385,7 +382,6 @@ public class IncomingCallNotificationService extends Service {
     }
 
     private void startAnswerActivity(CallInvite callInvite, int notificationId) {
-       // gotoAppOwn();
         Intent intent = new Intent(this, AnswerJavaActivity.class);
         intent.setAction(Constants.ACTION_INCOMING_CALL);
         intent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, notificationId);

@@ -27,20 +27,11 @@ public class IncomingCallNotificationActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(newIntent);
         }
-        gotoAppOwn();
+
         Log.d(TAG, "Finish");
 
         finish();
 
     }
 
-    private void gotoAppOwn(){
-        Intent appIntent = getPackageManager().getLaunchIntentForPackage("co.bettercliniq.app");
-        if(appIntent != null){
-            startActivity(appIntent);
-            Log.d(TAG, "Open app");
-        }else{
-            Log.d(TAG, "There is no package available in android");
-        }
-    }
 }
