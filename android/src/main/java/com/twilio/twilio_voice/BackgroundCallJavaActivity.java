@@ -169,6 +169,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
             
             if (intent.getStringExtra(Constants.CALL_FROM) != null) {
+
                 activateSensor();
                 String fromId = intent.getStringExtra(Constants.CALL_FROM).replace("client:", "");
 
@@ -184,6 +185,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                 Log.d(TAG, "handleCallIntent-");
                 configCallUI();
                 startTimer();
+                activeCall = intent.getParcelableExtra(Constants.INCOMING_CALL_INVITE);
             }else{
                 finish();
             }
@@ -237,11 +239,11 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                Log.d(TAG, "onCLick");
 
                isMuted = !isMuted;
-//               if (activeCall != null) {
+              if (activeCall != null) {
                    boolean mute = !activeCall.isMuted();
 
                    activeCall.mute(mute);
-                   Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute" :"Unmute",Toast.LENGTH_LONG).show();
+                   Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute" :"Un-mute",Toast.LENGTH_LONG).show();
                    if(mute){
                     btnMute.setBackgroundResource(R.drawable.speakerb);
                     btnMute.setMaxWidth(60);
@@ -249,7 +251,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                    }else{
                     btnMute.setBackgroundResource(R.drawable.speakerg);
                    }
-             //  }
+               }
                applyFabState(btnMute, isMuted);
                sendIntent(Constants.ACTION_TOGGLE_MUTE);
            }

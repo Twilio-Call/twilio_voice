@@ -163,6 +163,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
             String firstname = activeCallInvite.getCustomParameters().get("firstname");
             String lastname = activeCallInvite.getCustomParameters().get("lastname");
+
             String phoneNum = activeCallInvite.getFrom();
 
             String allNameUsed =
@@ -243,8 +244,10 @@ public class AnswerJavaActivity extends AppCompatActivity {
     private void startAnswerActivity(Call call) {
 
        Intent intent = new Intent(this, BackgroundCallJavaActivity.class);
+        CallInvite callInvite = intent.getParcelableExtra(Constants.INCOMING_CALL_INVITE);
        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       intent.putExtra(Constants.INCOMING_CALL_INVITE,callInvite);
         String firstname = activeCallInvite.getCustomParameters().get("firstname");
         String lastname = activeCallInvite.getCustomParameters().get("lastname");
         String phoneNum = activeCallInvite.getFrom();
@@ -306,10 +309,10 @@ public class AnswerJavaActivity extends AppCompatActivity {
             @Override
             public void onConnected(@NonNull Call call) {
                 activeCall = call;
-//                if (!TwilioVoicePlugin.appHasStarted) {
+               if (!TwilioVoicePlugin.appHasStarted) {
                     Log.d(TAG, "Connected from BackgroundUI");
                     startAnswerActivity(call);
-               // }
+               }
             }
 
             @Override
