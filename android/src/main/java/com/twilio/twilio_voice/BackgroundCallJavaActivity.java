@@ -235,7 +235,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                sendIntent(Constants.ACTION_TOGGLE_MUTE);
                isMuted = !isMuted;
                if (activeCall != null) {
-                   activeCall.mute(isMuted);
+                   boolean mute = !activeCall.isMuted();
+                   activeCall.mute(mute);
+                   Toast.makeText(BackgroundCallJavaActivity.this,mute+"Muted state",Toast.LENGTH_LONG).show();
                }
                applyFabState(btnMute, isMuted);
            }
@@ -258,6 +260,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
                audioManager.setSpeakerphoneOn(isOnSpeaker);
                applyFabState(btnOutput, isOnSpeaker);
+               Toast.makeText(BackgroundCallJavaActivity.this,isOnSpeaker+"Speaker state",Toast.LENGTH_LONG).show();
            }
        });
 
@@ -274,6 +277,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private void disconnected() {
 
         if (activeCall == null) return;
+        SoundPoolManager.getInstance(getBaseContext()).playDisconnect();
         activeCall = null;
     }
 
