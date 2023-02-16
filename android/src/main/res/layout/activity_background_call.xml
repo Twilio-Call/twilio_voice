@@ -68,7 +68,6 @@
                         android:contentDescription="@string/btn_mute"
                         android:padding="20dp"
                         android:src="@drawable/speakerg"
-                        android:tintMode="src_in"
                          />
                     <Space
                         android:layout_width="66dp"
@@ -86,7 +85,6 @@
                         android:contentDescription="@string/btn_speaker"
                         android:padding="20dp"
                         android:src="@drawable/speaker1"
-                        android:tintMode="src_in"
                         />
 
                 </LinearLayout>
