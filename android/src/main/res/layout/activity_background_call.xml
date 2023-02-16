@@ -57,38 +57,37 @@
 
                     android:orientation="horizontal"
                     >
-
+<!--                    android:background="@drawable/bg_full_rounded"-->
+<!--                    android:backgroundTint="@color/back_white"-->
                     <ImageView
-                                    android:id="@+id/btnMute"
+                        android:id="@+id/btnMute"
                         android:clickable="true"
                         android:focusable="true"
                         android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:background="@drawable/bg_full_rounded"
-                                    android:backgroundTint="@color/back_white"
-                                    android:contentDescription="@string/btn_mute"
-                                    android:padding="20dp"
-                                    android:src="@drawable/ic_mic_off"
-                                    android:tintMode="src_in"
-                                    app:tint="@color/lightGray"
-                       />
+                        android:layout_height="60dp"
+                        android:contentDescription="@string/btn_mute"
+                        android:padding="20dp"
+                        android:src="@drawable/speakerg"
+                        android:tintMode="src_in"
+                         />
                     <Space
                         android:layout_width="66dp"
                         android:layout_height="0dp">
+<!--                        android:background="@drawable/bg_full_rounded"-->
+<!--                        android:backgroundTint="@color/back_white"-->
+<!--                        app:tint="@color/lightGray"-->
                     </Space>
-                                <ImageView
-                                    android:id="@+id/btnOutput"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:background="@drawable/bg_full_rounded"
-                                    android:backgroundTint="@color/back_white"
-                                    android:contentDescription="@string/btn_speaker"
-                                    android:padding="20dp"
-                                    android:src="@drawable/ic_volume_2"
-                                    android:tintMode="src_in"
-                                    app:tint="@color/lightGray" />
+                    <ImageView
+                        android:id="@+id/btnOutput"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:contentDescription="@string/btn_speaker"
+                        android:padding="20dp"
+                        android:src="@drawable/speaker1"
+                        android:tintMode="src_in"
+                        />
 
                 </LinearLayout>
 

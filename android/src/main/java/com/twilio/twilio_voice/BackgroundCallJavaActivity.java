@@ -72,6 +72,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
         this.textTimer = findViewById(R.id.textTimer);
         this.textTimer.setVisibility(View.GONE);
+
+        btnMute.setBackgroundResource(R.drawable.speakerg);
+        btnOutput.setBackgroundResource(R.drawable.speaker1);
 //        this.btnMute.setClickable(true);
 //        this.btnMute.bringToFront();
 //        this.btnOutput.setClickable(true);
@@ -236,8 +239,14 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                isMuted = !isMuted;
                if (activeCall != null) {
                    boolean mute = !activeCall.isMuted();
+
                    activeCall.mute(mute);
-                   Toast.makeText(BackgroundCallJavaActivity.this,mute+"Muted state",Toast.LENGTH_LONG).show();
+                   Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute" :"Unmute",Toast.LENGTH_LONG).show();
+                   if(mute){
+                    btnMute.setBackgroundResource(R.drawable.speakerb);
+                   }else{
+                    btnMute.setBackgroundResource(R.drawable.speakerg);
+                   }
                }
                applyFabState(btnMute, isMuted);
            }
@@ -247,10 +256,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                sendIntent(Constants.ACTION_END_CALL);
-               disconnect();
                close();
                finish();
-               System.exit(0);
+               disconnect();
            }
        });
        btnOutput.setOnClickListener(new View.OnClickListener() {
@@ -260,7 +268,12 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
                audioManager.setSpeakerphoneOn(isOnSpeaker);
                applyFabState(btnOutput, isOnSpeaker);
-               Toast.makeText(BackgroundCallJavaActivity.this,isOnSpeaker+"Speaker state",Toast.LENGTH_LONG).show();
+               if(isOnSpeaker){
+                   btnMute.setBackgroundResource(R.drawable.speaker2);
+               }else{
+                   btnMute.setBackgroundResource(R.drawable.speaker1);
+               }
+               Toast.makeText(BackgroundCallJavaActivity.this, isOnSpeaker ? "Speaker On" :"Speaker Off",Toast.LENGTH_LONG).show();
            }
        });
 
@@ -269,6 +282,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     private void disconnect() {
         if (activeCall != null) {
+
             activeCall.disconnect();
             disconnected();
         }
@@ -277,7 +291,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private void disconnected() {
 
         if (activeCall == null) return;
-        SoundPoolManager.getInstance(getBaseContext()).playDisconnect();
+        SoundPoolManager.getInstance(BackgroundCallJavaActivity.this).playDisconnect();
         activeCall = null;
     }
 
