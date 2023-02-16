@@ -20,11 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-//import com.twilio.voice.Call;
+import com.twilio.voice.Call;
 import com.twilio.voice.CallInvite;
 
 import java.util.Objects;
@@ -37,7 +39,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
 
 
-    //    private Call activeCall;
+    private Call activeCall;
     private NotificationManager notificationManager;
     
     private PowerManager powerManager;
@@ -232,6 +234,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                Log.d(TAG, "onCLick");
                sendIntent(Constants.ACTION_TOGGLE_MUTE);
                isMuted = !isMuted;
+               if (activeCall != null) {
+                   activeCall.mute(isMuted);
+               }
                applyFabState(btnMute, isMuted);
            }
        });
@@ -240,7 +245,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                sendIntent(Constants.ACTION_END_CALL);
-
+               disconnect();
                close();
                finish();
                System.exit(0);
@@ -258,26 +263,20 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
 
     }
-    private  void muted(){
-        Log.d(TAG, "onCLick");
-        sendIntent(Constants.ACTION_TOGGLE_MUTE);
-        isMuted = !isMuted;
-        applyFabState(btnMute, isMuted);
+
+    private void disconnect() {
+        if (activeCall != null) {
+            activeCall.disconnect();
+            disconnected();
+        }
     }
 
-    private void hangUpNow(){
-        sendIntent(Constants.ACTION_END_CALL);
+    private void disconnected() {
 
-        close();
-        finish();
+        if (activeCall == null) return;
+        activeCall = null;
     }
-    private void speakerOn(){
-        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
-        audioManager.setSpeakerphoneOn(isOnSpeaker);
-        applyFabState(btnOutput, isOnSpeaker);
 
-    }
 
 
     @Override

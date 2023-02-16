@@ -161,16 +161,9 @@ public class AnswerJavaActivity extends AppCompatActivity {
         Log.d(TAG, "configCallUI");
         if (activeCallInvite != null) {
 
-//            String fromId = Objects.requireNonNull(activeCallInvite.getFrom()).replace("client:", "");
-//            SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
-//            String caller = preferences.getString(fromId, preferences.getString("defaultCaller", getString(R.string.unknown_caller)));
-//            tvUserName.setText(caller);
             String firstname = activeCallInvite.getCustomParameters().get("firstname");
             String lastname = activeCallInvite.getCustomParameters().get("lastname");
             String phoneNum = activeCallInvite.getFrom();
-            Log.d(TAG,firstname);
-            Log.d(TAG,lastname);
-            Log.d(TAG,phoneNum);
 
             String allNameUsed =
                     (firstname == null || firstname.isEmpty())  && (lastname == null || lastname.isEmpty()) ?
