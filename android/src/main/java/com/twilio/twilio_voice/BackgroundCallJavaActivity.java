@@ -243,7 +243,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                    boolean mute = !activeCall.isMuted();
 
                    activeCall.mute(mute);
-                   Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute" :"Un-mute",Toast.LENGTH_LONG).show();
+                   Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute Call" :"Un-mute Call",Toast.LENGTH_LONG).show();
                    if(mute){
                     btnMute.setBackgroundResource(R.drawable.speakerb);
                     btnMute.setMaxWidth(60);
