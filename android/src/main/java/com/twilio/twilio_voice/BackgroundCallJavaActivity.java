@@ -239,19 +239,19 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                Log.d(TAG, "onCLick");
 
                isMuted = !isMuted;
-              if (activeCall != null) {
+//              if (activeCall != null) {
                    boolean mute = !activeCall.isMuted();
 
                    activeCall.mute(mute);
                    Toast.makeText(BackgroundCallJavaActivity.this,mute ? "Mute Call" :"Un-mute Call",Toast.LENGTH_LONG).show();
-                   if(mute){
-                    btnMute.setBackgroundResource(R.drawable.speakerb);
-                    btnMute.setMaxWidth(60);
-                    btnMute.setMaxHeight(60);
-                   }else{
-                    btnMute.setBackgroundResource(R.drawable.speakerg);
-                   }
-               }
+//                   if(mute){
+//                    btnMute.setBackgroundResource(R.drawable.speakerb);
+//                    btnMute.setMaxWidth(60);
+//                    btnMute.setMaxHeight(60);
+//                   }else{
+//                    btnMute.setBackgroundResource(R.drawable.speakerg);
+//                   }
+//               }
                applyFabState(btnMute, isMuted);
                sendIntent(Constants.ACTION_TOGGLE_MUTE);
            }
@@ -273,13 +273,13 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
                boolean isOnSpeaker = !audioManager.isSpeakerphoneOn();
                audioManager.setSpeakerphoneOn(isOnSpeaker);
                applyFabState(btnOutput, isOnSpeaker);
-               if(isOnSpeaker){
-                   btnOutput.setBackgroundResource(R.drawable.speaker2);
-                   btnOutput.setMaxWidth(60);
-                   btnOutput.setMaxHeight(60);
-               }else{
-                   btnOutput.setBackgroundResource(R.drawable.speaker1);
-               }
+//               if(isOnSpeaker){
+//                   btnOutput.setBackgroundResource(R.drawable.speaker2);
+//                   btnOutput.setMaxWidth(60);
+//                   btnOutput.setMaxHeight(60);
+//               }else{
+//                   btnOutput.setBackgroundResource(R.drawable.speaker1);
+//               }
                Toast.makeText(BackgroundCallJavaActivity.this, isOnSpeaker ? "Speaker On" :"Speaker Off",Toast.LENGTH_LONG).show();
            }
        });
@@ -324,7 +324,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             button.setBackgroundTintList(colorStateList);
         }
-       // button.setBackgroundTintList(colorStateList);
+        //button.setBackgroundTintList(colorStateList);
     }
 
     private void sendIntent(String action) {

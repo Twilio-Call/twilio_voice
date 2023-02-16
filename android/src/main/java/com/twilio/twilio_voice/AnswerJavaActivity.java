@@ -309,10 +309,10 @@ public class AnswerJavaActivity extends AppCompatActivity {
             @Override
             public void onConnected(@NonNull Call call) {
                 activeCall = call;
-               if (!TwilioVoicePlugin.appHasStarted) {
+//               if (!TwilioVoicePlugin.appHasStarted) {
                     Log.d(TAG, "Connected from BackgroundUI");
                     startAnswerActivity(call);
-               }
+               //}
             }
 
             @Override
