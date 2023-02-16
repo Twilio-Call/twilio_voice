@@ -177,6 +177,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "onCLick");
+                    ////
                     checkPermissionsAndAccept();
                 }
             });
