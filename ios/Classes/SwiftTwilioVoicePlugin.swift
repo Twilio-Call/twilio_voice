@@ -497,10 +497,10 @@ public class SwiftTwilioVoicePlugin: NSObject, FlutterPlugin,  FlutterStreamHand
         var fromx1:String = callInvite.from ?? ""
         fromx1 = fromx1.replacingOccurrences(of: "client:", with: "")
         // Start at here
-        self.sendPhoneCallEvents(description: "Ringing|\(from)|\(callInvite.to)|Incoming\(formatCustomParams(params: callInvite.customParameters))", isError: false)
+        self.sendPhoneCallEvents(description: "Ringing|\(from ?? <#default value#>)|\(callInvite.to)|Incoming\(formatCustomParams(params: callInvite.customParameters))", isError: false)
         reportIncomingCall(from: from!, fromx: fromx! ,fromx1 : fromx1,uuid: callInvite.uuid)
         self.callInvite = callInvite
-        self.finaleSTL = "\(from) \(fromx)".trimmingCharacters(in: .whitespaces).isEmpty ? fromx1 : "\(from) \(fromx)"
+        self.finaleSTL = "\(String(describing: from)) \(String(describing: fromx))".trimmingCharacters(in: .whitespaces).isEmpty ? fromx1 : "\(from ?? "") \(fromx ?? "")"
     }   
     
     func formatCustomParams(params: [String:Any]?)->String{
@@ -798,7 +798,7 @@ public class SwiftTwilioVoicePlugin: NSObject, FlutterPlugin,  FlutterStreamHand
         let finale:String = combine.trimmingCharacters(in: .whitespaces).isEmpty ? number : combine
         
         // Test from here
-        let callHandle: CXHandle = CXHandle(type: .generic,value: finale.capitalized)
+        let _: CXHandle = CXHandle(type: .generic,value: finale.capitalized)
         
         let callUpdate: CXCallUpdate = CXCallUpdate()
         //callUpdate.remoteHandle = nil
