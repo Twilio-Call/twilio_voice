@@ -161,11 +161,12 @@ public class SwiftTwilioVoicePlugin: NSObject, FlutterPlugin,  FlutterStreamHand
         {
             result(self.call == nil ? nil : self.call!.sid);
             return;
-        }else if flutterCall.method == "getParams"{
-            /// from here
-            result(finaleSTL!.trimmingCharacters(in: .whitespaces) == nil ? nil : finaleSTL!.trimmingCharacters(in: .whitespaces));
-            return;
         }
+        // else if flutterCall.method == "getParams"{
+        //     /// from here
+        //     result(finaleSTL!.trimmingCharacters(in: .whitespaces) == nil ? nil : finaleSTL!.trimmingCharacters(in: .whitespaces));
+        //     return;
+        // }
 
         else if flutterCall.method == "isOnCall"
         {
@@ -499,6 +500,8 @@ public class SwiftTwilioVoicePlugin: NSObject, FlutterPlugin,  FlutterStreamHand
         reportIncomingCall(from: from!, fromx: fromx! ,fromx1 : fromx1,uuid: callInvite.uuid)
         self.callInvite = callInvite
         self.finaleSTL = "\(from) \(fromx)".trimmingCharacters(in: .whitespaces).isEmpty ? fromx1 : "\(from) \(fromx)"
+        
+        self.sendPhoneCallEvents(description: "Ringing|\(finaleSTL ?? "")|\(callInvite.to)|Incoming\(formatCustomParams(params: callInvite.customParameters))", isError: false)
     }   
     
     func formatCustomParams(params: [String:Any]?)->String{
