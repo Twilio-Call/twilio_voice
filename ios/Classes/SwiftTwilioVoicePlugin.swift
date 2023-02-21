@@ -162,11 +162,11 @@ public class SwiftTwilioVoicePlugin: NSObject, FlutterPlugin,  FlutterStreamHand
             result(self.call == nil ? nil : self.call!.sid);
             return;
         }
-        // else if flutterCall.method == "getParams"{
-        //     /// from here
-        //     result(finaleSTL!.trimmingCharacters(in: .whitespaces) == nil ? nil : finaleSTL!.trimmingCharacters(in: .whitespaces));
-        //     return;
-        // }
+        else if flutterCall.method == "getParams"{
+            /// from here
+            result(finaleSTL!.trimmingCharacters(in: .whitespaces) == nil ? nil : finaleSTL!.trimmingCharacters(in: .whitespaces));
+            return;
+        }
 
         else if flutterCall.method == "isOnCall"
         {
